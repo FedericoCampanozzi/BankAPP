@@ -1,15 +1,11 @@
 import {
 	Entity,
-	PrimaryGeneratedColumn,
-	Column,
-	BaseEntity,
+	Column
 } from 'typeorm';
+import { BaseTable } from './BaseTable';
 
 @Entity()
-export class Person extends BaseEntity {
-	@PrimaryGeneratedColumn()
-	id: number;
-
+export class Person extends BaseTable {
 	@Column()
 	first_name: string;
 

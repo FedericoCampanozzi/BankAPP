@@ -1,11 +1,8 @@
 import {
 	Entity,
 	Column,
-	CreateDateColumn,
-	UpdateDateColumn,
 	OneToMany,
 	ManyToMany,
-	JoinTable,
 } from 'typeorm';
 import { Banker } from './Banker';
 import { Transaction } from './Transaction';
@@ -33,14 +30,11 @@ export class Client extends Person {
 		hair_color: string;
 	};
 
-	@Column({ type: 'simple-array', default: [] })
+	@Column({ 
+		type: 'simple-array', 
+		default: [] 
+	})
 	family_members: string[];
-
-	@CreateDateColumn()
-	created_at: Date;
-
-	@UpdateDateColumn()
-	updated_at: Date;
 
 	@ManyToMany((type) => Banker, {
 		cascade: true,

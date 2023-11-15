@@ -5,10 +5,10 @@ import {
 	UpdateDateColumn,
 	PrimaryGeneratedColumn,
 	ManyToOne,
-	JoinColumn,
-	BaseEntity,
+	JoinColumn
 } from 'typeorm';
 import { Client } from './Client';
+import { BaseTable } from './utils/BaseTable';
 
 export enum TransactionType {
 	DEPOSIT = 'deposit',
@@ -16,10 +16,7 @@ export enum TransactionType {
 }
 
 @Entity('transaction')
-export class Transaction extends BaseEntity {
-	@PrimaryGeneratedColumn()
-	id: number;
-
+export class Transaction extends BaseTable {
 	@Column({
 		type: 'enum',
 		enum: TransactionType,
@@ -42,10 +39,4 @@ export class Transaction extends BaseEntity {
 		name: 'client_id',
 	})
 	client: Client;
-
-	@CreateDateColumn()
-	created_at: Date;
-
-	@UpdateDateColumn()
-	updated_at: Date;
 }
