@@ -1,7 +1,7 @@
 # BankAPP
-Demonstrative APP for managed a bank (transaction, client, bankers, ...)
+Demonstrative APP for managing a bank (transaction, client, bankers, ...)
 
 # RoadMap
 - Implement TransactionType in another table
-- Implement Foreign Key with transaction
-- Implement frontend
+- Implement Foreign Key with transaction table
+- Build frontend with vuetify
