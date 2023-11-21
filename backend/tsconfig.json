@@ -29,5 +29,5 @@
 	},
 	"exclude": ["node_modules"],
 	"include": ["./src/**/*.tsx", "./src/**/*.ts"],
-	"typeRoots": ["./src/types/global.envtypes.d.ts", "./node_modules/@types"]
+	"typeRoots": ["./node_modules/@types"]
 }
