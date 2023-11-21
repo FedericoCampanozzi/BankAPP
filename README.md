@@ -1,2 +1,6 @@
 # BankAPP
-Applicazione (dummy) per la gestione delle transazioni bancarie
+Demonstrative APP for managed a bank (transaction, client, bankers, ...)
+
+# RoadMap
+. Implement TransactionType in another table
+. Implement Foreign Key with transaction

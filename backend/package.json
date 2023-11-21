@@ -4,8 +4,6 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"dev": "nodemon --watch './**/*.ts' --exec 'ts-node' src/index.ts",
 		"dev-mysql": "ts-node ./src/index.ts mysql",
 		"dev-sqlite": "ts-node ./src/index.ts _sqlite",
 		"dev-postgres": "ts-node ./src/index.ts postgres"
