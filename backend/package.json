@@ -7,7 +7,8 @@
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"dev": "nodemon --watch './**/*.ts' --exec 'ts-node' src/index.ts",
 		"dev-w-mysql": "nodemon --watch './**/*.ts' --exec 'ts-node' src/index.ts mysql",
-		"dev-mysql": "ts-node ./src/index.ts mysql"
+		"dev-mysql": "ts-node ./src/index.ts mysql",
+		"dev-sqlite": "ts-node ./src/index.ts sql_lite"
 	},
 	"keywords": [],
 	"author": "",
