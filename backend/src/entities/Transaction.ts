@@ -7,18 +7,10 @@ import {
 import { Client } from './Client';
 import { BaseTable } from './utils/BaseTable';
 
-export enum TransactionType {
-	DEPOSIT = 'deposit',
-	WITHDRAW = 'withdraw',
-}
-
 @Entity('transaction')
 export class Transaction extends BaseTable {
-	@Column({
-		type: 'enum',
-		enum: TransactionType,
-	})
-	type: string;
+	@Column()
+	type: number;
 
 	@Column({
 		type: 'numeric',

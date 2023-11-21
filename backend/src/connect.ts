@@ -29,7 +29,7 @@ if(envfile == "mysql") {
       synchronize: true,
     });
   };
-} else if(envfile == "sqlite"){
+} else if(envfile == "_sqlite"){
   connect = async () => {
     await createConnection({
       type: 'sqlite',
@@ -42,14 +42,13 @@ if(envfile == "mysql") {
   connect = async () => {
     await createConnection({
       type: 'postgres',
-      database: process.env.DB_PATH ? path.resolve(__dirname, String(process.env.DB_PATH)) : "",
       replication:{
         master:{
           port: process.env.DB_PORT ? Number(process.env.DB_PORT) : -1,
           host: process.env.HOST ? String(process.env.HOST) : "",
           database: process.env.DB_NAME ? String(process.env.DB_NAME) : "",
           username: process.env.DB_USER ? String(process.env.DB_USER) : "",
-          password: process.env.DB_PASSWORD ? String(process.env.DB_PASSWORD) : ""
+          password: process.env.DB_PASSWORD ? String(process.env.DB_PASSWORD) : ""          
         },
         slaves:[]
       },

@@ -1,9 +1,6 @@
 import express from 'express';
 import { Client } from '../entities/Client';
-import {
-	Transaction,
-	TransactionType,
-} from '../entities/Transaction';
+import { Transaction } from '../entities/Transaction';
 
 const router = express.Router();
 
@@ -14,9 +11,7 @@ router.post(
 
 		const { type, amount } = req.body;
 
-		const client = await Client.findOne(
-			parseInt(clientId)
-		);
+		const client = await Client.findOne(parseInt(clientId));
 
 		if (!client) {
 			return res.json({
@@ -32,12 +27,10 @@ router.post(
 
 		await transaction.save();
 
-		if (type === TransactionType.DEPOSIT) {
+		if (type === 0) {
 			client.balance = client.balance + amount;
 			client.transactions = [transaction];
-		} else if (
-			type === TransactionType.WITHDRAW
-		) {
+		} else if (type === 1) {
 			client.balance = client.balance - amount;
 			client.transactions = [transaction];
 		}
