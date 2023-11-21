@@ -9,22 +9,40 @@ import { connectBankerToClientRouter } from './routes/connect_banker_to_client';
 import { createTransactionRouter } from './routes/create_transaction';
 import { deleteClientRouter } from './routes/delete_client';
 import { fetchClientsRouter } from './routes/fetch_clients';
+import connection from './config';
+
+//require('dotenv').config()
 
 const app = express();
+
+//console.log("connection.DB_TYPE", connection.DB_TYPE);
+/*
+const mysql = {
+	type: DB_TYPE,
+	host: HOST,
+	port: PORT,
+	username: DB_USER,
+	password: DB_PASSWORD,
+	database: DB_NAME,
+	insecureAuth : true,
+	entities: [Client, Banker, Transaction],
+	synchronize: true,
+};
+*/
 
 const main = async () => {
 	try {
 		await createConnection({
-			type: 'postgres',
+			type: 'mysql',
 			host: 'localhost',
-			port: 5432,
-			username: 'laithharb',
-			password: undefined,
-			database: 'typeorm',
+			port: 3306,
+			username: 'root',
+			password: 'root',
+			database: 'bank',
 			entities: [Client, Banker, Transaction],
 			synchronize: true,
 		});
-		console.log('Connected to Postgres');
+		console.log('Connected to database');
 
 		app.use(express.json());
 
@@ -34,9 +52,11 @@ const main = async () => {
 		app.use(createTransactionRouter);
 		app.use(deleteClientRouter);
 		app.use(fetchClientsRouter);
+		
+		console.log("connection.MONGO_URI=",connection.MONGO_URI);
 
 		app.listen(8080, () => {
-			console.log('Now running on port 8080');
+			console.log('Now running on port ', 8080);
 		});
 	} catch (error) {
 		console.error(error);

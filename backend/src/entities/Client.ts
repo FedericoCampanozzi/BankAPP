@@ -20,7 +20,7 @@ export class Client extends Person {
 		default: true,
 	})
 	is_active: boolean;
-
+	/*
 	@Column({
 		type: 'simple-json',
 		nullable: true,
@@ -28,14 +28,14 @@ export class Client extends Person {
 	additional_info: {
 		age: number;
 		hair_color: string;
-	};
-
+	};*/
+/*
 	@Column({ 
 		type: 'simple-array', 
 		default: [] 
 	})
 	family_members: string[];
-
+	*/
 	@ManyToMany((type) => Banker, {
 		cascade: true,
 	})

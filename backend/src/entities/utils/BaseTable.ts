@@ -6,7 +6,7 @@ import {
 	BaseEntity
 } from 'typeorm';
 
-@Entity('transaction')
+@Entity()
 export class BaseTable extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	id: number;
