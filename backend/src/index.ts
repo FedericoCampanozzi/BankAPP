@@ -6,6 +6,7 @@ import { createTransactionRouter } from './routes/create_transaction';
 import { deleteClientRouter } from './routes/delete_client';
 import { fetchClientsRouter } from './routes/fetch_clients';
 import { SERVER_PORT, connect } from './connect';
+import { getTransactionRouter } from './routes/transaction';
 
 const app = express();
 
@@ -22,6 +23,7 @@ const main = async () => {
 		app.use(createTransactionRouter);
 		app.use(deleteClientRouter);
 		app.use(fetchClientsRouter);
+		app.use(getTransactionRouter);
 
 		app.listen(SERVER_PORT, () => {
 			console.log('Now server is running on port', SERVER_PORT);

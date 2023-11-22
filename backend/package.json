@@ -4,9 +4,9 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"dev-mysql": "ts-node ./src/index.ts mysql",
-		"dev-sqlite": "ts-node ./src/index.ts _sqlite",
-		"dev-postgres": "ts-node ./src/index.ts postgres"
+		"dev-mysql": "nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec ts-node ./src/index.ts mysql",
+		"dev-sqlite": "nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec 'ts-node ./src/index.ts _sqlite'",
+		"dev-postgres": "nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec 'ts-node ./src/index.ts postgres'"
 	},
 	"keywords": [],
 	"author": "",

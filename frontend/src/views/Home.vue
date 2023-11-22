@@ -1,7 +1,7 @@
 <template>
-  <HelloWorld />
+  <Transactions />
 </template>
 
 <script lang="ts" setup>
-  import HelloWorld from '@/components/HelloWorld.vue'
+  import Transactions from '@/components/Transactions.vue';
 </script>
