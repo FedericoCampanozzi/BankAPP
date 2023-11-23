@@ -13,13 +13,13 @@ export class Person extends BaseTable {
 	last_name: string;
 
 	@Column({
-		//unique: true,
+		unique: true
 	})
 	email: string;
 
 	@Column({
-		//unique: true,
-		length: 10,
+		unique: true,
+		length: 10
 	})
 	card_number: string;
 }

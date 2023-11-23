@@ -11,7 +11,7 @@ import { Person } from './utils/Person';
 export class Banker extends Person {
 	@Column({
 		length: 10,
-		//unique: true,
+		unique: true
 	})
 	employee_number: string;
 

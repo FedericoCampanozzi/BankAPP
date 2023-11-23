@@ -26,7 +26,7 @@ if(envfile == "mysql") {
       username: process.env.DB_USER ? String(process.env.DB_USER) : "",
       password: process.env.DB_PASSWORD ? String(process.env.DB_PASSWORD) : "",
       entities: [Client, Banker, Transaction],
-      synchronize: true,
+      synchronize: true
     });
   };
 } else if(envfile == "_sqlite"){
