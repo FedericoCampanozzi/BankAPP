@@ -21,11 +21,6 @@ export class Client extends Person {
 	})
 	is_active: boolean;
 	
-	@ManyToMany((type) => Banker, {
-		cascade: true,
-	})
-	bankers: Banker[];
-
 	@OneToMany(
 		() => Transaction,
 		(transaction) => transaction.client

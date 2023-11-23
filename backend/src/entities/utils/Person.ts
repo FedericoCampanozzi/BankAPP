@@ -16,10 +16,21 @@ export class Person extends BaseTable {
 		unique: true
 	})
 	email: string;
+	
+	@Column({
+		unique: true
+	})
+	username: string;
+	
+	@Column({
+		length: 256
+	})
+	password: string;
 
 	@Column({
 		unique: true,
 		length: 10
 	})
 	card_number: string;
+
 }

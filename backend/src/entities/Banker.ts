@@ -14,20 +14,4 @@ export class Banker extends Person {
 		unique: true
 	})
 	employee_number: string;
-
-	@ManyToMany((type) => Client, {
-		cascade: true,
-	})
-	@JoinTable({
-		name: 'bankers_clients',
-		joinColumn: {
-			name: 'banker',
-			referencedColumnName: 'id',
-		},
-		inverseJoinColumn: {
-			name: 'client',
-			referencedColumnName: 'id',
-		},
-	})
-	clients: Client[];
 }

@@ -22,7 +22,7 @@ router.put('/api/transaction/put/:IdClientSender/:IdClientReceiver', async (req,
         const transaction = await Transaction.create({
             amount,
             type,
-            IdClientSender,
+            sender,
         });
 
         await transaction.save();
