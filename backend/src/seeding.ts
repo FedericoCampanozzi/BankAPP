@@ -1,6 +1,5 @@
 import { Factory, Seeder } from "typeorm-seeding";
-import { Connection } from "typeorm";
-
+import { Connection, createQueryBuilder } from "typeorm";
 import { Banker } from "./entities/Banker";
 import { Client } from "./entities/Client";
 import { Transaction } from "./entities/Transaction";
@@ -8,18 +7,26 @@ import { TransactionType } from "./entities/TransactionType";
 
 export default class InitialDatabaseSeed implements Seeder {
   public async run(factory: Factory, connection: Connection): Promise<void> {
-    /*
-    const users = await factory(User)().createMany(15);
-    await factory(Post)()
-      .map(async (post) => {
-        post.user = users[Math.floor(Math.random() * users.length)];
-        return post;
-      })
-      .createMany(100);
-    */
     const clients = await factory(Client)().createMany(15);
     const bankers = await factory(Banker)().createMany(15);
-    const t_types = await factory(TransactionType)().createMany(3);
+
+    await factory(TransactionType)().create({
+      name: "DEPOSIT",
+      description: "put some money in yuor cc (+)"
+    });
+    await factory(TransactionType)().create({
+      name: "WITHDRAW",
+      description: "take some money from yuor cc (-)"
+    });
+    await factory(TransactionType)().create({
+      name: "TRANSFER",
+      description: "give to someone some money from yuor cc ((+),(-))"
+    });
+
+    const t_types = await createQueryBuilder()
+                          .select()
+                          .from(TransactionType, 't')
+                          .getRawMany();
 
     await factory(Transaction)()
       .map(async (transaction) => {

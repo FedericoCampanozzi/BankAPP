@@ -1,5 +1,5 @@
 import { define } from "typeorm-seeding";
-import { Transaction } from '../entities/Transaction';
+import { Transaction } from '../../entities/Transaction';
 
 define(Transaction, () => {
   const transaction = new Transaction();

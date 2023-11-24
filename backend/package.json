@@ -7,7 +7,8 @@
 		"dev-mysql": "nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec ts-node ./src/index.ts mysql",
 		"dev-sqlite": "nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec 'ts-node ./src/index.ts _sqlite'",
 		"dev-postgres": "nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec 'ts-node ./src/index.ts postgres'",
-		"db:seed": "ts-node ./node_modules/typeorm-seeding/dist/cli.js seed"
+		"db:seed": "ts-node ./node_modules/typeorm-seeding/dist/cli.js seed",
+		"seed:run": "ts-node typeorm migration:run -c seed"
 	},
 	"keywords": [],
 	"author": "",

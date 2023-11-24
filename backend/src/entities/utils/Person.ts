@@ -4,7 +4,7 @@ import {
 } from 'typeorm';
 import { BaseTable } from './BaseTable';
 
-@Entity()
+//@Entity()
 export class Person extends BaseTable {
 	@Column()
 	first_name: string;
@@ -26,11 +26,4 @@ export class Person extends BaseTable {
 		length: 256
 	})
 	password: string;
-
-	@Column({
-		unique: true,
-		length: 10
-	})
-	card_number: string;
-
 }

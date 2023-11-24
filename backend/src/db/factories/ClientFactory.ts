@@ -1,4 +1,4 @@
-import { Client } from "../entities/Client";
+import { Client } from "../../entities/Client";
 import { define } from "typeorm-seeding";
 
 define(Client, () => {
@@ -9,6 +9,6 @@ define(Client, () => {
   client.balance = 0;
   client.is_active = true;
   client.username = "ABCD";
-  client.password = "password"
+  client.password = "password";
   return client;
 });
