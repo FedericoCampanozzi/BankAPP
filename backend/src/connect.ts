@@ -4,6 +4,7 @@ import { createConnection } from 'typeorm';
 import { Client } from './entities/Client';
 import { Banker } from './entities/Banker';
 import { Transaction } from './entities/Transaction';
+import { TransactionType } from "./entities/TransactionType";
 
 let envfile = "";
 process.argv.forEach(function (val, index) {
@@ -15,6 +16,7 @@ console.log("Read ", p, " configuration");
 dotenv.config({ path: p });
 
 let connect = async () => { throw new Error("provide a wrong connection string");  return; };
+const entities = [Client, Banker, Transaction, TransactionType];
 
 if(envfile == "mysql") {
   connect = async () => {
@@ -25,7 +27,7 @@ if(envfile == "mysql") {
       database: process.env.DB_NAME ? String(process.env.DB_NAME) : "",
       username: process.env.DB_USER ? String(process.env.DB_USER) : "",
       password: process.env.DB_PASSWORD ? String(process.env.DB_PASSWORD) : "",
-      entities: [Client, Banker, Transaction],
+      entities: entities,
       synchronize: true
     });
   };
@@ -34,7 +36,7 @@ if(envfile == "mysql") {
     await createConnection({
       type: 'sqlite',
       database: process.env.DB_PATH ? path.resolve(__dirname, String(process.env.DB_PATH)) : "",
-      entities: [Client, Banker, Transaction],
+      entities: entities,
       synchronize: true,
     });
   };
@@ -52,7 +54,7 @@ if(envfile == "mysql") {
         },
         slaves:[]
       },
-      entities: [Client, Banker, Transaction],
+      entities: entities,
       synchronize: true,
     });
   };

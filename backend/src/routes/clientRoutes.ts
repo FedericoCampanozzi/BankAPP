@@ -30,19 +30,19 @@ router.put('/api/transaction/put/:IdClientSender/:IdClientReceiver', async (req,
         if (type == 0 && ids != -1 && idr == -1) {
             // 0 = deposit => A client want to deposit some money in his current account
             sender.balance = sender.balance + amount;
-            sender.transactions = [transaction];
+            sender.s_transactions = [transaction];
             await sender.save();
         } else if (type === 1 && ids != -1 && idr == -1) {
             // 1 = withdraw => A client want to take some money from his current account
             sender.balance = sender.balance - amount;
-            sender.transactions = [transaction];
+            sender.s_transactions = [transaction];
             await sender.save();
         } else if (type === 2 && ids != -1 && idr != -1){
             // 2 = transfer => A client want to pay someone
             sender.balance = sender.balance - amount;
             receiver.balance = receiver.balance + amount;
-            sender.transactions = [transaction];
-            receiver.transactions = [transaction];
+            sender.s_transactions = [transaction];
+            receiver.r_transactions = [transaction];
             await sender.save();
             await receiver.save();
         } else {

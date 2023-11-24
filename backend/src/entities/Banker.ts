@@ -1,11 +1,10 @@
 import {
 	Entity,
 	Column,
-	ManyToMany,
-	JoinTable,
+	OneToMany,
 } from 'typeorm';
-import { Client } from './Client';
 import { Person } from './utils/Person';
+import { Transaction } from './Transaction';
 
 @Entity('banker')
 export class Banker extends Person {
@@ -14,4 +13,10 @@ export class Banker extends Person {
 		unique: true
 	})
 	employee_number: string;
+	
+	@OneToMany(
+		() => Transaction,
+		(transaction) => transaction.banker
+	)
+	transactions: Transaction[];
 }

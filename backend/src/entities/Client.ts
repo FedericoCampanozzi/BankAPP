@@ -23,7 +23,13 @@ export class Client extends Person {
 	
 	@OneToMany(
 		() => Transaction,
-		(transaction) => transaction.client
+		(transaction) => transaction.sender
 	)
-	transactions: Transaction[];
+	s_transactions: Transaction[];
+	
+	@OneToMany(
+		() => Transaction,
+		(transaction) => transaction.receiver
+	)
+	r_transactions: Transaction[];
 }

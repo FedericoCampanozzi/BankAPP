@@ -17,10 +17,7 @@ export class Transaction extends BaseTable {
 
 	@ManyToOne(
 		() => Client,
-		(client) => client.transactions,
-		{
-			onDelete: 'CASCADE',
-		}
+		(client) => client.s_transactions
 	)
 	@JoinColumn({
 		name: 'sender_id',
@@ -29,34 +26,25 @@ export class Transaction extends BaseTable {
 
 	@ManyToOne(
 		() => Client,
-		(client) => client.transactions,
-		{
-			onDelete: 'CASCADE',
-		}
+		(client) => client.r_transactions
 	)
 	@JoinColumn({
-		name: 'receiver_id'
+		name: 'receiver_id',
 	})
-	receiver: Client;
+	receiver?: Client;
 
 	@ManyToOne(
-		() => Client,
-		(client) => client.transactions,
-		{
-			onDelete: 'CASCADE',
-		}
+		() => Banker,
+		(banker) => banker.transactions
 	)
 	@JoinColumn({
 		name: 'banker_id'
 	})
-	banker: Banker;
+	banker?: Banker;
 
 	@ManyToOne(
 		() => TransactionType,
-		(transactionType) => transactionType.transactions,
-		{
-			onDelete: 'CASCADE',
-		}
+		(transactionType) => transactionType.transactions
 	)
 	@JoinColumn({
 		name: 'type_id',
