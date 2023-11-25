@@ -26,26 +26,15 @@
 </template>
 
 <script lang="ts">
-import { Transaction } from "../interfaces/Transaction"
+import { Transaction } from '@/interfaces/transaction.entity';
+import { hostConfig } from '../../eviroment/environment.global'
+
 export default {
-    name: 'Transactions',/*
-    data() {
-        return {
-          transactions: Transaction
-        }
-    },
-    created() {
-        this.getAllTransactions();
-    },*/
+    name: 'Transactions',
     methods: {
         getAllTransactions() : Transaction[] {
-            this.axios.get('transaction/get', {
-              baseURL: 'http://localhost:8080/api/'
-            })
-                .then((response) => {
-                    return response.data;
-                });
-                return []
+            this.axios.get('transaction/get', hostConfig ).then((response) => { return response.data; });
+          return []
         }
     }
 }

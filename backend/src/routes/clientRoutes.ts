@@ -7,6 +7,7 @@ const router = express.Router();
 
 router.put('/api/transaction/put/:IdClientSender/:IdClientReceiver', async (req, res) => {
         const { IdClientSender, IdClientReceiver } = req.params;
+        
         const ids = parseInt(IdClientSender);
         const idr = parseInt(IdClientReceiver);
         

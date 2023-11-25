@@ -5,9 +5,7 @@ import { Client } from '../entities/Client';
 
 const router = express.Router();
 
-router.get('/api/transaction/get/:IdClient', async (req, res) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    
+router.get('/api/transaction/get/:IdClient', async (req, res) => {    
 	const transactions = await createQueryBuilder()
                             .select(['id','amount'])
                             .from(Transaction, 't')
