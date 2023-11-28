@@ -8,8 +8,18 @@ const router = express.Router();
 
 router.get('/api/transaction/get/:IdClient', async (req, res) => {    
 	const transactions = await createQueryBuilder()
-                            .select()
+                            .select(['t.id as tid','t.created_at','t.amount',
+                                     'tt.id as ttid','tt.name as ttname',
+                                     's.name as sender',
+                                     'r.name as receiver',
+                                     'b.name as banker',
+                                     'b.employee_number'])
                             .from(Transaction, 't')
+                            .innerJoin('t.type_id','tt')
+                            .innerJoin('t.sender_id','s')
+                            .leftJoin('t.client_id','r')
+                            .leftJoin('t.banker_id','b')
+                            .where('t.Id = :Id', {Id: req.params.IdClient}).orWhere(':Id = -1', {Id: req.params.IdClient})
                             .getRawMany()
                             
 	return res.json(transactions);
@@ -71,5 +81,9 @@ router.put('/api/transaction/put/:IdClientSender/:IdClientReceiver', async (req,
     return res.json("transaction insert successfully");
 }
 );
+
+router.delete('/api/transaction/delete', async (req, res) => {
+    const IdTransaction = req.body.IdTransaction;
+});
 
 export { router as transactionRoutes };

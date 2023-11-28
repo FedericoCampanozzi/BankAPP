@@ -36,12 +36,16 @@
         <td>{{ item.id }}</td>
         <td>{{ formatDate(item.created_at) }}</td>
         <td>
-          {{ item.nameTT }}
+          <div v-if="item.idTT == 1"><font-awesome-icon :icon="'down-long'" style="color: #03e76a;" /></div>
+          <div v-if="item.idTT == 2"><font-awesome-icon :icon="'up-long'" style="color: #faf600;" /></div>
+          <div v-if="item.idTT == 3"><font-awesome-icon :icon="'arrows-rotate'" style="color: #e70303;" /></div>
         </td>
         <td>{{ item.senderName }}</td>
         <td>{{ item.receiverName }}</td>
         <td>
-          {{ item.bankerName }} (ID:{{ item.bankerNumber }})
+          <div v-if="item.bankerName != null">
+            {{ item.bankerName }} (ID:{{ item.bankerNumber }})
+          </div>
         </td>
         <td>{{ item.amount }}</td>
         <td>
@@ -50,7 +54,7 @@
           type="submit"
           variant="elevated"
           @click="deleteTransaction">
-            <font-awesome-icon :icon="['fas', 'trash']" style="color: #ff0000;" />
+            <font-awesome-icon :icon="'trash'" style="color: #e70303;" size="lg"/>
           </v-btn>
         </td>
       </tr>

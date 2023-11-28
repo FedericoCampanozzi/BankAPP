@@ -1,10 +1,8 @@
 import {
-	Entity,
 	Column
 } from 'typeorm';
 import { BaseTable } from './BaseTable';
 
-//@Entity()
 export class Person extends BaseTable {
 	@Column()
 	first_name: string;

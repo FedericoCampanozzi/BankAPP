@@ -1,10 +1,8 @@
 import {
 	Entity,
 	Column,
-	OneToMany,
-	ManyToMany,
+	OneToMany
 } from 'typeorm';
-import { Banker } from './Banker';
 import { Transaction } from './Transaction';
 import { Person } from './utils/Person';
 
@@ -22,7 +20,6 @@ export class Client extends Person {
 	card_number: string;
 
 	@Column({
-		name: 'active',
 		default: true,
 	})
 	is_active: boolean;

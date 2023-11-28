@@ -8,6 +8,7 @@ import { Client } from './Client';
 import { BaseTable } from './utils/BaseTable';
 import { TransactionType } from './TransactionType';
 import { Banker } from './Banker';
+
 @Entity('transaction')
 export class Transaction extends BaseTable {
 	@Column({
