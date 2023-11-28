@@ -11,6 +11,9 @@
         <th class="text-left">
           Amount
         </th>
+        <th class="text-left">
+          
+        </th>
       </tr>
     </thead>
     <tbody>
@@ -20,6 +23,15 @@
       >
         <td>{{ item.id }}</td>
         <td>{{ item.amount }}</td>
+        <td>
+          <v-btn
+          size="small" 
+          type="submit"
+          variant="elevated"
+          @click="deleteTransaction">
+            <font-awesome-icon :icon="['fas', 'trash']" style="color: #ff0000;" />
+        </v-btn>
+        </td>
       </tr>
     </tbody>
   </v-table>
@@ -27,14 +39,22 @@
 
 <script lang="ts">
 import { Transaction } from '@/interfaces/transaction.entity';
-import { hostConfig } from '../../eviroment/environment.global'
+import { EnvironmentVariable } from '../../environment/environment.global'
 
 export default {
     name: 'Transactions',
     methods: {
         getAllTransactions() : Transaction[] {
-            this.axios.get('transaction/get', hostConfig ).then((response) => { return response.data; });
+            const id = EnvironmentVariable.isClient ? EnvironmentVariable.user.id : -1;
+            this.axios.get(`transaction/get/${id}`, EnvironmentVariable.host ).then((response) => { 
+              console.log(response.data);
+              return null; 
+            });
           return []
+        },
+        deleteTransaction() {
+          /* api delete here */
+          this.getAllTransactions();
         }
     }
 }

@@ -4,18 +4,25 @@
  * Bootstraps Vuetify and other plugins then mounts the App`
  */
 
+// Components
+import App from './App.vue'
 // Plugins
 import { registerPlugins } from '@/plugins'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-
-// Components
-import App from './App.vue'
+/* import the fontawesome core */
+import { library } from '@fortawesome/fontawesome-svg-core'
+/* import font awesome icon component */
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+/* import specific icons */
+import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
+/* add icons to the library */
+library.add(faUserSecret)
 
 // Composables
 import { createApp } from 'vue'
 
-const app = createApp(App)
+const app = createApp(App).component('font-awesome-icon', FontAwesomeIcon)
 app.use(VueAxios, axios)
 
 registerPlugins(app)

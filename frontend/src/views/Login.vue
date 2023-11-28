@@ -9,7 +9,7 @@
                 <br>
                 <v-btn :disabled="!form" :loading="loading" block color="success" size="large" type="submit"
                     variant="elevated">
-                    Sign In
+                    <i class="fa-sharp fa-solid fa-right-to-bracket"></i> Sign In
                 </v-btn>
             </v-form>
         </v-card>
@@ -17,7 +17,8 @@
 </template>
 
 <script lang="ts">
-import { hostConfig } from '../../eviroment/environment.global';
+import { EnvironmentVariable } from '../../environment/environment.global';
+
 export default {
     data: () => ({
         username: null,
@@ -29,13 +30,26 @@ export default {
         onSubmit() {
             if (!this.form) return;
             this.loading = true;
+            /*
             this.axios.post('login/post', { 
-                    username: this.username,
-                    password: this.password
-                }, hostConfig).then((response) => {
+                    Username: this.username,
+                    Password: this.password
+                }, EnvironmentVariable.host).then((response) => {
                 this.loading = false;
+                EnvironmentVariable.user = response;
                 console.log(response.data);
             });
+            */
+            setTimeout(() => {                
+                this.loading = false;
+                EnvironmentVariable.user = {
+                    username : 'Fede_99',
+                    first_name : 'Federico',
+                    last_name : 'Campanozzi'
+                };
+                EnvironmentVariable.isClient = true;
+                this.$router.push({ path: '/transactions' });
+            }, 1000);
         },
         required(v: any) {
             return !!v || 'Field is required'

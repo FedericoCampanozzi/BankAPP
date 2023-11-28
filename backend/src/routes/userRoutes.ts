@@ -6,9 +6,9 @@ import { Banker } from '../entities/Banker';
 
 const router = express.Router();
 
-router.post('/api/login/post/Username/:Username/Password/:Password', async (req, res) => {
-    return res.json({ role : 'AAAAAAAAAAAAAAAHHH' });
+router.post('/api/login/post/:Username/:Password', async (req, res) => {
     const { Username, Password } = req.params;
+    return res.json({ role : 'AAAAAAAAAAAAAAAHHH' });
 
     const isUser  = await createQueryBuilder()
         .select(['id'])

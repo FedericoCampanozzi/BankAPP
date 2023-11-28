@@ -27,6 +27,7 @@ if(envfile == "mysql") {
       database: process.env.DB_NAME ? String(process.env.DB_NAME) : "",
       username: process.env.DB_USER ? String(process.env.DB_USER) : "",
       password: process.env.DB_PASSWORD ? String(process.env.DB_PASSWORD) : "",
+      dropSchema: true,
       entities: entities,
       synchronize: true,
       migrationsRun: true,
@@ -37,6 +38,7 @@ if(envfile == "mysql") {
     configuration = {
       type: 'sqlite',
       database: process.env.DB_PATH ? path.resolve(__dirname, String(process.env.DB_PATH)) : "",
+      dropSchema: true,
       entities: entities,
       synchronize: true,
       migrationsRun: true,
@@ -56,6 +58,7 @@ if(envfile == "mysql") {
         },
         slaves:[]
       },
+      dropSchema: true,
       entities: entities,
       synchronize: true,
       migrationsRun: true,

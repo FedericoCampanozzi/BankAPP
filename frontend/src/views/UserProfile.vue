@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts">
-import { hostConfig } from '../../eviroment/environment.global';
+import { EnvironmentVariable } from '../../environment/environment.global';
 export default {
     data: () => ({
         firstname: null,
@@ -32,13 +32,20 @@ export default {
         onSubmit() {
             if (!this.form) return;
             this.loading = true;
+            /*
             this.axios.post('login/post', { 
                     //username: this.email,
                     //password: this.password
-                }, hostConfig).then((response) => {
+                }, EnvironmentVariable.host).then((response) => {
                 this.loading = false;
                 console.log(response.data);
             });
+            */
+           
+            setTimeout(() => {
+                this.loading = false;
+                this.$router.push({ path: '/transactions' });
+            }, 1000);
         },
         required(v: any) {
             return !!v || 'Field is required'

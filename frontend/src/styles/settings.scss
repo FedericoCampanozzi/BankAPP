@@ -1,0 +1,24 @@
+hr {
+    margin-top: 5px !important;
+    margin-bottom: 20px !important;
+}
+
+.card-title {
+    font-size: 22px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-align: center;
+}
+
+.app-banner-container {
+    height: 64px;
+    padding: 10px;
+    width: 100%;
+}
+
+div.btn-tabs {
+    display: inline-block !important;
+}
+
+div.btn-tabs > button, div.btn-tabs > span{
+    margin: 0 5px;
+}
