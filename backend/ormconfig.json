@@ -1,0 +1,10 @@
+{
+    "type": "mysql",
+    "port": 3306,
+    "host": "localhost",
+    "database": "bank",
+    "username": "root",
+    "password": "root",
+    "entities": ["./entities/*"],
+    "migrations": ["./db/migrations/*"]
+}
