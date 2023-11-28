@@ -5,6 +5,8 @@
     "database": "bank",
     "username": "root",
     "password": "root",
-    "entities": ["./entities/*"],
-    "migrations": ["./db/migrations/*"]
+    "entities": ["./entities/*.ts"],
+    "migrations": ["./db/migrations/*.ts"],
+    "seeds": ["src/seeding.ts"],
+    "factories": ["src/db/factories/**/*{.ts,.js}"]
 }
