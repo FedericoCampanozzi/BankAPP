@@ -12,18 +12,21 @@
                     :items="getAllTransactionType()"
                     variant="outlined"
                     item-title="name"
-                    v-on:change="setUpSelects" />
+                    :rules="[required_mm]" 
+                    v-on:change="setUpSelects"/>
                 
                 <v-select
                     clearable
                     label="Cliente"
                     :items="getAllClients()"
+                    :rules="[required_mm]" 
                     variant="outlined" />
                 
                 <v-select
                     clearable
                     label="Ricevente"
                     :items="getAllClients()"
+                    :rules="[required_mm]" 
                     variant="outlined" />
                 
                 <v-text-field 

@@ -6,7 +6,7 @@
                     label="First Name"></v-text-field>
                 <v-text-field v-model="lastname" :readonly="loading" :rules="[required]" class="mb-2" clearable
                     label="Last Name"></v-text-field>
-                <v-text-field v-model="email" :readonly="loading" :rules="[required]" clearable 
+                <v-text-field v-model="email" :readonly="loading" :rules="[required]" class="mb-2" clearable 
                     label="Email"></v-text-field>
                 <br>
                 <v-btn :disabled="!form" :loading="loading" block color="success" size="large" type="submit"
@@ -22,9 +22,9 @@
 import { EnvironmentVariable } from '../../environment/environment.global';
 export default {
     data: () => ({
-        firstname: null,
-        lastname: null,
-        email: null,
+        firstname: EnvironmentVariable.user.first_name,
+        lastname: EnvironmentVariable.user.last_name,
+        email: EnvironmentVariable.user.email,
         form: false,
         loading: false,
     }),
@@ -40,8 +40,7 @@ export default {
                 this.loading = false;
                 console.log(response.data);
             });
-            */
-           
+            */           
             setTimeout(() => {
                 this.loading = false;
                 this.$router.push({ path: '/transactions' });

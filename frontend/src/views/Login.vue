@@ -2,14 +2,31 @@
     <v-sheet class="pa-12" rounded>
         <v-card class="mx-auto px-6 py-8" max-width="344">
             <v-form v-model="form" @submit.prevent="onSubmit">
-                <v-text-field v-model="username" :readonly="loading" :rules="[required]" class="mb-2" clearable
-                    label="Username"></v-text-field>
-                <v-text-field v-model="password" type="password" :readonly="loading" :rules="[required]" clearable label="Password"
-                    placeholder="Enter your password"></v-text-field>
+                <v-text-field 
+                    v-model="username" 
+                    :readonly="loading" 
+                    :rules="[required]" 
+                    class="mb-2" 
+                    clearable
+                    label="Username" />
+                <v-text-field 
+                    v-model="password" 
+                    type="password" 
+                    :readonly="loading" 
+                    :rules="[required]" 
+                    clearable 
+                    label="Password"/>
                 <br>
-                <v-btn :disabled="!form" :loading="loading" block color="success" size="large" type="submit"
+                <v-btn 
+                    :disabled="!form" 
+                    :loading="loading" 
+                    block 
+                    color="success"
+                    size="large"
+                    type="submit"
                     variant="elevated">
-                    <i class="fa-sharp fa-solid fa-right-to-bracket"></i> Sign In
+                        <font-awesome-icon :icon="'right-to-bracket'" style="color: #025f2c;" /> 
+                        <span style="padding-left: 20px;">Sign In</span>
                 </v-btn>
             </v-form>
         </v-card>
@@ -45,7 +62,8 @@ export default {
                 EnvironmentVariable.user = {
                     username : 'Fede_99',
                     first_name : 'Federico',
-                    last_name : 'Campanozzi'
+                    last_name : 'Campanozzi',
+                    email: 'a.b@c.com',
                 };
                 EnvironmentVariable.isClient = true;
                 this.$router.push({ path: '/transactions' });

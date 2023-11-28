@@ -27,7 +27,8 @@
           variant="elevated"
           @click="goToPage(tab.pagePath)"
           v-if="isEnabled(tab.pageName)">
-            {{ tab.label }}
+            <font-awesome-icon :icon=tab.icon style="color: #000000;" /> 
+            <span style="padding-left: 5px;">{{ tab.label }}</span>
         </v-btn>
       </div>
       <div class="btn-tabs">
@@ -37,7 +38,8 @@
           variant="elevated"
           @click="logout"
           v-if="isEnabled('Login')">
-            Log Out
+            <font-awesome-icon :icon="'right-from-bracket'" style="color: #000000;" /> 
+            <span style="padding-left: 5px;">Log Out</span>
         </v-btn>
       </div>
     </div>
@@ -52,15 +54,18 @@ export default {
     Tabs: [{
       pagePath: '/transactions',
       pageName: 'Transactions',
-      label: 'Transactions'
+      label: 'Transactions',
+      icon: 'coins'
     },{
       pagePath: '/addtransaction',
       pageName: 'AddTransaction',
-      label: 'New Payment'
+      label: 'New Payment',
+      icon: 'wallet'
     },{
       pagePath: '/profile',
       pageName: 'Profile',
-      label: 'Profile'
+      label: 'Profile',
+      icon: 'user-pen'
     }]
   }),
   methods:{

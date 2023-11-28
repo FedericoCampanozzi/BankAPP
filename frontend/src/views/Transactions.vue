@@ -9,9 +9,21 @@
           ID
         </th>
         <th class="text-left">
-          Amount
+          Date
         </th>
         <th class="text-left">
+          
+        </th>
+        <th class="text-left">
+          Sender
+        </th>
+        <th class="text-left">
+          Receiver
+        </th>
+        <th class="text-left">
+          Operator
+        </th>
+        <th>
           
         </th>
       </tr>
@@ -22,6 +34,15 @@
         :key="item.id"
       >
         <td>{{ item.id }}</td>
+        <td>{{ formatDate(item.created_at) }}</td>
+        <td>
+          {{ item.nameTT }}
+        </td>
+        <td>{{ item.senderName }}</td>
+        <td>{{ item.receiverName }}</td>
+        <td>
+          {{ item.bankerName }} (ID:{{ item.bankerNumber }})
+        </td>
         <td>{{ item.amount }}</td>
         <td>
           <v-btn
@@ -30,7 +51,7 @@
           variant="elevated"
           @click="deleteTransaction">
             <font-awesome-icon :icon="['fas', 'trash']" style="color: #ff0000;" />
-        </v-btn>
+          </v-btn>
         </td>
       </tr>
     </tbody>
@@ -55,6 +76,9 @@ export default {
         deleteTransaction() {
           /* api delete here */
           this.getAllTransactions();
+        },
+        formatDate(d?: Date){
+          return d?.toLocaleDateString();
         }
     }
 }
