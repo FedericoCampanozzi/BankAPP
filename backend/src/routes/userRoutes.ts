@@ -1,5 +1,5 @@
 import express from 'express';
-import { createQueryBuilder } from 'typeorm';
+import { createQueryBuilder, getConnection } from 'typeorm';
 import { Client } from '../entities/Client';
 import { Banker } from '../entities/Banker';
 
@@ -9,7 +9,7 @@ router.post('/api/login/post', async (req, res) => {
     const Username = req.body.Username;
     const Password = req.body.Password;
 
-    const isClient  = await createQueryBuilder()
+    const isClient  = await getConnection().createQueryBuilder()
         .select()
         .from(Client, 'c')
         .where('c.username = :us AND c.password = :pwd', {
@@ -17,7 +17,7 @@ router.post('/api/login/post', async (req, res) => {
             pwd: Password
         }).getOne();
 
-    const isBanker  = await createQueryBuilder()
+    const isBanker  = await getConnection().createQueryBuilder()
         .select()
         .from(Banker, 'b')
         .where('b.username = :us AND b.password = :pwd', {
@@ -26,7 +26,13 @@ router.post('/api/login/post', async (req, res) => {
         }).getOne();
     
     let role = "NotFound";
-    console.log("isClient = ", isClient, "isBanker = ", isBanker);
+    console.log("isClient = ", createQueryBuilder()
+    .select()
+    .from(Client, 'c')
+    .where('c.username = :us AND c.password = :pwd', {
+        us: Username, 
+        pwd: Password
+    }).getSql(), "isBanker = ", isBanker);
     if(isClient != undefined) role = "Client";
     else if(isBanker != undefined) role = "Banker";
 
