@@ -9,5 +9,6 @@
     "migrations": ["./src/db/migrations/*.ts"],
     "seeds": ["./src/seeding.ts"],
     "factories": ["./src/db/factories/**/*{.ts,.js}"],
-    "dropSchema": true
+    "dropSchema": true,
+    "synchronize": true
 }
