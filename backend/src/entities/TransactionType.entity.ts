@@ -4,9 +4,9 @@ import {
     OneToMany
 } from 'typeorm';
 import { BaseTable } from './utils/BaseTable';
-import { Transaction } from './Transaction';
+import { Transaction } from './Transaction.entity';
 
-@Entity('transactionType')
+@Entity('transactiontype')
 export class TransactionType extends BaseTable {
 	@Column()
 	name: string;

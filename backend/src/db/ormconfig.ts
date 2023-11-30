@@ -27,11 +27,11 @@ if(envfile == "mysql") {
       database: process.env.DB_NAME ? String(process.env.DB_NAME) : "",
       username: process.env.DB_USER ? String(process.env.DB_USER) : "",
       password: process.env.DB_PASSWORD ? String(process.env.DB_PASSWORD) : "",
-      dropSchema: true,
+      //dropSchema: true,
       entities: entities,
       synchronize: true,
-      migrationsRun: true,
-      migrations: migrations,
+      //migrationsRun: true,
+      //migrations: migrations,
       cli: cli
     };
 } else if(envfile == "_sqlite"){
@@ -41,8 +41,8 @@ if(envfile == "mysql") {
       dropSchema: true,
       entities: entities,
       synchronize: true,
-      migrationsRun: true,
-      migrations: migrations,
+      //migrationsRun: true,
+      //migrations: migrations,
       cli: cli
     };
 } else if(envfile == "postgres"){
@@ -58,11 +58,11 @@ if(envfile == "mysql") {
         },
         slaves:[]
       },
-      dropSchema: true,
+      //dropSchema: true,
       entities: entities,
       synchronize: true,
-      migrationsRun: true,
-      migrations: migrations,
+      //migrationsRun: true,
+      //migrations: migrations,
       cli: cli
     }
 }

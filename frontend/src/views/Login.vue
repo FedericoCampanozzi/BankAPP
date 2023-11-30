@@ -58,14 +58,24 @@ export default {
                 }, EnvironmentVariable.host)
                 .then((response) => {
                     this.loading = false;
-                    EnvironmentVariable.user = response;
+
                     const role = response.data['role'];
+                    let user = undefined;
                     this.userNotFound = role == "NotFound";
-                    EnvironmentVariable.isClient = role == "Client";
+
+                    if(role == "Client")        user = response.data['ifClient'];
+                    else if(role == "Banker")   user = response.data['ifBanker'];
+                    console.log("user = ", user);
+                    console.log("role = ", role);
+
                     this.username = null;
                     this.password = null;
-                    console.log("role = ", role);
-                    if(role != "NotFound") this.$router.push({ path: '/transactions' });
+
+                    if(!this.userNotFound) {
+                        EnvironmentVariable.user = user
+                        EnvironmentVariable.isClient = role == "Client";
+                        this.loadTransactionsComponent();
+                    }
                 }
             );
         },
@@ -73,6 +83,13 @@ export default {
             this.userNotFound = false;
             return !!v || 'Field is required'
         },
+        loadTransactionsComponent() {
+            import('@/views/Transactions.vue').then(module => {
+                this.$router.push({ path: '/transactions' });
+            }).catch(error => {
+                console.error('Failed to load TransactionsComponent:', error);
+            });
+        }
     },
 }
 </script>

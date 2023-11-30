@@ -4,7 +4,7 @@ import {
 	OneToMany,
 } from 'typeorm';
 import { Person } from './utils/Person';
-import { Transaction } from './Transaction';
+import { Transaction } from './Transaction.entity';
 
 @Entity('banker')
 export class Banker extends Person {

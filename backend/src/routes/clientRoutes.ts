@@ -1,6 +1,6 @@
 import express from 'express';
 import { createQueryBuilder } from 'typeorm';
-import { Client } from '../entities/Client';
+import { Client } from '../entities/Client.entity';
 
 const router = express.Router();
 

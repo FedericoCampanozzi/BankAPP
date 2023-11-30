@@ -30,21 +30,21 @@
     </thead>
     <tbody>
       <tr
-        v-for="item in getAllTransactions()"
+        v-for="item in transactions"
         :key="item.id"
       >
         <td>{{ item.id }}</td>
         <td>{{ formatDate(item.created_at) }}</td>
         <td>
-          <div v-if="item.idTT == 1"><font-awesome-icon :icon="'down-long'" style="color: #03e76a;" /></div>
-          <div v-if="item.idTT == 2"><font-awesome-icon :icon="'up-long'" style="color: #faf600;" /></div>
-          <div v-if="item.idTT == 3"><font-awesome-icon :icon="'arrows-rotate'" style="color: #e70303;" /></div>
+          <div v-if="item.tt_id == 1"><font-awesome-icon :icon="'down-long'" style="color: #03e76a;" /></div>
+          <div v-if="item.tt_id == 2"><font-awesome-icon :icon="'up-long'" style="color: #8d6205;" /></div>
+          <div v-if="item.tt_id == 3"><font-awesome-icon :icon="'arrows-rotate'" style="color: #e70303;" /></div>
         </td>
-        <td>{{ item.senderName }}</td>
-        <td>{{ item.receiverName }}</td>
+        <td>{{ item.sender }}</td>
+        <td>{{ item.receiver }}</td>
         <td>
-          <div v-if="item.bankerName != null">
-            {{ item.bankerName }} (ID:{{ item.bankerNumber }})
+          <div v-if="item.banker != null">
+            {{ item.banker }} (ID:{{ item.banker_employee_number }})
           </div>
         </td>
         <td>{{ item.amount }}</td>
@@ -68,21 +68,30 @@ import { EnvironmentVariable } from '../../environment/environment.global'
 
 export default {
     name: 'Transactions',
+    data(): { transactions: Transaction[] } {
+      return {
+        transactions: [],
+      };
+    },
+    created() {
+      this.getAllTransactions();
+    },
     methods: {
-        getAllTransactions() : Transaction[] {
+        getAllTransactions() {
             const id = EnvironmentVariable.isClient ? EnvironmentVariable.user.id : -1;
             this.axios.get(`transaction/get/${id}`, EnvironmentVariable.host ).then((response) => { 
-              console.log(response.data);
-              return null; 
+              console.log("transactions = ", response.data['transactions']);
+              this.transactions = response.data['transactions']; 
             });
-          return []
         },
         deleteTransaction() {
           /* api delete here */
           this.getAllTransactions();
         },
         formatDate(d?: Date){
-          return d?.toLocaleDateString();
+          if(d == undefined || d == null) return "No Data";
+          //return new Date(d).toLocaleDateString();ù
+          return d.toLocaleDateString();
         }
     }
 }

@@ -4,10 +4,10 @@ import {
 	ManyToOne,
 	JoinColumn
 } from 'typeorm';
-import { Client } from './Client';
+import { Client } from './Client.entity';
 import { BaseTable } from './utils/BaseTable';
-import { TransactionType } from './TransactionType';
-import { Banker } from './Banker';
+import { TransactionType } from './TransactionType.entity';
+import { Banker } from './Banker.entity';
 
 @Entity('transaction')
 export class Transaction extends BaseTable {

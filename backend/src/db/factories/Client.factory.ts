@@ -1,4 +1,4 @@
-import { Client } from "../../entities/Client";
+import { Client } from "../../entities/Client.entity";
 import { define } from "typeorm-seeding";
 
 define(Client, () => {

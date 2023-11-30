@@ -3,7 +3,7 @@ import {
 	Column,
 	OneToMany
 } from 'typeorm';
-import { Transaction } from './Transaction';
+import { Transaction } from './Transaction.entity';
 import { Person } from './utils/Person';
 
 @Entity('client')

@@ -1,14 +1,14 @@
 import { Factory, Seeder } from "typeorm-seeding";
 import { Connection, createQueryBuilder } from "typeorm";
-import { Banker } from "./entities/Banker";
-import { Client } from "./entities/Client";
-import { Transaction } from "./entities/Transaction";
-import { TransactionType } from "./entities/TransactionType";
+import { Banker } from "./entities/Banker.entity";
+import { Client } from "./entities/Client.entity";
+import { Transaction } from "./entities/Transaction.entity";
+import { TransactionType } from "./entities/TransactionType.entity";
 
 export default class InitialDatabaseSeed implements Seeder {
   public async run(factory: Factory, connection: Connection): Promise<void> {
-    //const clients = await factory(Client)().createMany(15);
-    //const bankers = await factory(Banker)().createMany(15);
+    const clients = await factory(Client)().createMany(15);
+    const bankers = await factory(Banker)().createMany(15);
 
     await factory(TransactionType)().create({
       name: "DEPOSIT",
@@ -22,12 +22,9 @@ export default class InitialDatabaseSeed implements Seeder {
       name: "TRANSFER",
       description: "give to someone some money from yuor cc ((+),(-))"
     });
-/*
-    const t_types = await createQueryBuilder()
-                          .select()
-                          .from(TransactionType, 't')
-                          .getRawMany();
 
+    const t_types = await createQueryBuilder('transactiontype').getRawMany();
+    
     await factory(Transaction)()
       .map(async (transaction) => {
         const rnd_type = t_types[Math.floor(Math.random() * t_types.length)];
@@ -55,6 +52,5 @@ export default class InitialDatabaseSeed implements Seeder {
         }
         return transaction;
       }).createMany(1000);
-      */
   }
 }

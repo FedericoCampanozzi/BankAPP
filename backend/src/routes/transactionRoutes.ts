@@ -1,36 +1,38 @@
 import express from 'express';
-import { Transaction } from '../entities/Transaction';
+import { Transaction } from '../entities/Transaction.entity';
 import { createQueryBuilder } from 'typeorm';
-import { Client } from '../entities/Client';
-import { TransactionType } from '../entities/TransactionType';
+import { Client } from '../entities/Client.entity';
+import { TransactionType } from '../entities/TransactionType.entity';
 
 const router = express.Router();
 
 router.get('/api/transaction/get/:IdClient', async (req, res) => {    
-	const transactions = await createQueryBuilder()
-                            .select(['t.id as tid','t.created_at','t.amount',
-                                     'tt.id as ttid','tt.name as ttname',
-                                     's.name as sender',
-                                     'r.name as receiver',
-                                     'b.name as banker',
-                                     'b.employee_number'])
-                            .from(Transaction, 't')
-                            .innerJoin('t.type_id','tt')
-                            .innerJoin('t.sender_id','s')
-                            .leftJoin('t.client_id','r')
-                            .leftJoin('t.banker_id','b')
-                            .where('t.Id = :Id', {Id: req.params.IdClient}).orWhere(':Id = -1', {Id: req.params.IdClient})
-                            .getRawMany()
+	const transactions = await  createQueryBuilder()
+                                .select([
+                                    't.id as id',
+                                    't.created_at as created_at',
+                                    't.updated_at as updated_at',
+                                    't.amount as amount',
+                                    'tt.name as tt_name',
+                                    'tt.id as tt_id',
+                                    's.username as sender',
+                                    'r.username as receiver',
+                                    'b.username as banker',
+                                    'b.employee_number as banker_employee_number',
+                                ])
+                                .from(Transaction, 't')
+                                .innerJoin('transactiontype', 'tt', 't.type_id = tt.id')
+                                .innerJoin('client', 's', 't.sender_id = s.id')
+                                .leftJoin('client', 'r', 't.receiver_id = r.id')
+                                .leftJoin('banker', 'b', 't.banker_id = b.id')
+                                .where('t.Id = :Id', { Id: req.params.IdClient }).orWhere(':Id = -1', { Id: req.params.IdClient })
+                                .getRawMany();
                             
-	return res.json(transactions);
+	return res.json({transactions: transactions});
 });
 
-router.get('/api/transaction-type/get/all', async (req, res) => {    
-	const transactionTypes = await createQueryBuilder()
-                            .select()
-                            .from(TransactionType, 'tt')
-                            .getRawMany()
-                            
+router.get('/api/transaction-type/get/all', async (req, res) => {
+	const transactionTypes = await createQueryBuilder('transactiontype').getRawMany()
 	return res.json(transactionTypes);
 });
 
@@ -83,7 +85,6 @@ router.put('/api/transaction/put/:IdClientSender/:IdClientReceiver', async (req,
 );
 
 router.delete('/api/transaction/delete', async (req, res) => {
-    const IdTransaction = req.body.IdTransaction;
 });
 
 export { router as transactionRoutes };

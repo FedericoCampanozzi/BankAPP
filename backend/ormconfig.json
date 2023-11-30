@@ -5,8 +5,9 @@
     "database": "bank",
     "username": "root",
     "password": "root",
-    "entities": ["./entities/*.ts"],
-    "migrations": ["./db/migrations/*.ts"],
-    "seeds": ["src/seeding.ts"],
-    "factories": ["src/db/factories/**/*{.ts,.js}"]
+    "entities": ["./src/entities/*.entity.ts"],
+    "migrations": ["./src/db/migrations/*.ts"],
+    "seeds": ["./src/seeding.ts"],
+    "factories": ["./src/db/factories/**/*{.ts,.js}"],
+    "dropSchema": true
 }
