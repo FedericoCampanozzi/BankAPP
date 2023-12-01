@@ -25,7 +25,8 @@ router.get('/api/transaction/get/:IdClient', async (req, res) => {
                                 .innerJoin('client', 's', 't.sender_id = s.id')
                                 .leftJoin('client', 'r', 't.receiver_id = r.id')
                                 .leftJoin('banker', 'b', 't.banker_id = b.id')
-                                .where('t.Id = :Id', { Id: req.params.IdClient }).orWhere(':Id = -1', { Id: req.params.IdClient })
+                                //.where('t.sender_id = :Id OR -1 = :Id', { Id: req.params.IdClient })
+                                .limit(50)
                                 .getRawMany();
                             
 	return res.json({transactions: transactions});

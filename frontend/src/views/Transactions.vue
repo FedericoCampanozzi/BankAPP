@@ -90,7 +90,7 @@ export default {
         },
         formatDate(d?: Date){
           if(d == undefined || d == null) return "No Data";
-          //return new Date(d).toLocaleDateString();ù
+          //return new Date(d).toLocaleDateString();
           return d.toLocaleDateString();
         }
     }

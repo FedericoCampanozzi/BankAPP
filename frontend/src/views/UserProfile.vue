@@ -32,19 +32,17 @@ export default {
         onSubmit() {
             if (!this.form) return;
             this.loading = true;
-            /*
-            this.axios.post('login/post', { 
-                    //username: this.email,
-                    //password: this.password
-                }, EnvironmentVariable.host).then((response) => {
-                this.loading = false;
-                console.log(response.data);
-            });
-            */           
-            setTimeout(() => {
+            EnvironmentVariable.user.first_name = this.firstname,
+            EnvironmentVariable.user.last_name = this.lastname,
+            EnvironmentVariable.user.email = this.email,
+            this.axios.put('user/update', { 
+                User: EnvironmentVariable.user, 
+                IsClient : EnvironmentVariable.isClient
+            }, EnvironmentVariable.host)
+            .then((response) => {
                 this.loading = false;
                 this.$router.push({ path: '/transactions' });
-            }, 1000);
+            });
         },
         required(v: any) {
             return !!v || 'Field is required'
