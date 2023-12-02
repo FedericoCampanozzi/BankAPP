@@ -23,12 +23,7 @@ router.post('/api/login/post', async (req, res) => {
         }).getOne();
     
     let role = "NotFound";
-    /*
-    console.log("Username = ", Username, 
-                "Password = ", Password, 
-                "isClient = ", isClient, 
-                "isBanker = ", isBanker);
-    */
+    
     if(isClient != undefined) role = "Client";
     else if(isBanker != undefined) role = "Banker";
 

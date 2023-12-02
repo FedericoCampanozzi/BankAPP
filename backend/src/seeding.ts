@@ -42,6 +42,7 @@ export default class InitialDatabaseSeed implements Seeder {
         const rnd_sender = clients[Math.floor(Math.random() * clients.length)];
         let rnd_receiver = undefined;
         
+        transaction.created_at = UtilityFunctions.getFakeDate();
         transaction.sender = rnd_sender;
         transaction.type = rnd_type;
         transaction.amount = UtilityFunctions.getFakeNumberBetween(10000, 500000) / 100.00;

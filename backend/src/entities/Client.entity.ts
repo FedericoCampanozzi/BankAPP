@@ -9,7 +9,9 @@ import { Person } from './utils/Person';
 @Entity('client')
 export class Client extends Person {
 	@Column({
-		type: 'numeric',
+		type: 'decimal',
+		precision: 6,
+		scale: 2
 	})
 	balance: number;
 

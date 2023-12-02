@@ -64,6 +64,7 @@ import { TransactionType } from '@/interfaces/transactionType.entity';
 import { EnvironmentVariable } from '../../environment/environment.global';
 import { Client } from '@/interfaces/client.entity';
 import Navigator from './components/Navigator.vue';
+import api from '../../environment/axios.global';
 
 export default {
     data(): {
@@ -104,21 +105,19 @@ export default {
         }
     },
     methods: {
-        onSubmit() {
+        async onSubmit() {
             if (!this.form) return;
             this.loading = true;
-            this.axios.put('transaction/put', {
-                TransactionType : this.sel_tt_id,
+            await api.post('transaction/post', {
+                TransactionTypeID : this.sel_tt_id,
                 Sender : this.sel_sender_id,
                 Receiver : this.sel_receiver_id,
                 Banker : EnvironmentVariable.user.id,
                 Amount: this.amount,
-                IsClient : EnvironmentVariable.isClient
-            }, EnvironmentVariable.host)
-            .then((response) => {
-                this.loading = false;
-                this.loadTransactionsComponent();
+                Role : EnvironmentVariable.role
             });
+            this.loading = false;
+            this.$router.push({ path: '/transactions' });
         },
         required(v: any) {
             return !!v || 'Field is required'
@@ -128,26 +127,15 @@ export default {
             const n = parseFloat(v);
             return n > 0 || 'Insert positive number'
         },
-        getAllTransactionType() : TransactionType[] {
-            this.axios.get('transaction-type/get/all', EnvironmentVariable.host ).then((response) => { 
-                console.log("transactionTypes = ", response.data['transactionTypes']);
-                this.transactionTypes = response.data['transactionTypes'];
-            });
-            return [];
+        async getAllTransactionType() {
+            const response = await api.get('transaction-type/get/all');
+            console.log("transactionTypes = ", response.data['transactionTypes']);
+            this.transactionTypes = response.data['transactionTypes'];
         },
-        getAllClients() : Client[] {
-            this.axios.get('client/get/all', EnvironmentVariable.host ).then((response) => { 
-                console.log("clients = ", response.data['clients']);
-                this.clients = response.data['clients']; 
-            });
-            return [];
-        },
-        loadTransactionsComponent() {
-            import('@/views/Transactions.vue').then(module => {
-                this.$router.push({ path: '/transactions' });
-            }).catch(error => {
-                console.error('Failed to load TransactionsComponent:', error);
-            });
+        async getAllClients() {
+            const response = await api.get('client/get/all');
+            console.log("clients = ", response.data['clients']);
+            this.clients = response.data['clients'];
         }
     },
     components: { Navigator }

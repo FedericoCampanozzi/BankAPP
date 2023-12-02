@@ -42,11 +42,6 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    name: 'Default',
-    component: () => import('@/views/Login.vue'),
-  },
-  {
-    path: '/login',
     name: 'Login',
     component: () => import('@/views/Login.vue'),
   },

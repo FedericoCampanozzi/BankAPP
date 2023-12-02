@@ -19,6 +19,9 @@
         {{ getCurrentUser() == undefined ? '' : getCurrentUser().last_name }}
       </span>
     </div>
+    <div class="btn-tabs" style="margin-left: 5px;" v-if="!isClient && isClient != undefined">
+      <font-awesome-icon :icon="'building-columns'" style="color: #000000;" size="2xl" />
+    </div>
     <div style="float: right; display: inline-block;">
       <div v-for="tab in Tabs" class="btn-tabs">
         <router-link :to=tab.pagePath v-if="isEnabled(tab.pageName)">
@@ -29,7 +32,7 @@
         </router-link>
       </div>
       <div class="btn-tabs">
-        <router-link to="/login" v-if="isEnabled('Login')">
+        <router-link to="/" v-if="isEnabled('Login')">
           <v-btn size="small" type="submit" variant="elevated" @click="logout">
           <font-awesome-icon :icon="'right-from-bracket'" style="color: #000000;" />
           <span style="padding-left: 5px;">Log Out</span>
@@ -44,6 +47,7 @@
 import { EnvironmentVariable } from '../../../environment/environment.global';
 export default {
   data: () => ({
+    isClient: EnvironmentVariable.isClient,
     Tabs: [{
       pagePath: '/transactions',
       pageName: 'Transactions',
@@ -63,7 +67,7 @@ export default {
   }),
   methods: {
     isEnabled(pageName: string) {
-      return this.$route.name != "Login" && this.$route.name != pageName;
+      return this.$route.name != "Login" && this.$route.name != "Default" && this.$route.name != pageName;
     },
     logout() {
       EnvironmentVariable.isClient = undefined;

@@ -1,5 +1,15 @@
 <template>
     <Navigator />
+    <v-sheet class="pa-12" rounded v-if="balance != undefined">
+        <v-card class="mx-auto px-6 py-8" max-width="344">
+            <div>
+                <p>
+                    <h1>Balance</h1>
+                </p> 
+                <span>{{ balance }}</span> &euro;
+            </div>
+        </v-card>
+    </v-sheet>        
     <v-sheet class="pa-12" rounded>
         <v-card class="mx-auto px-6 py-8" max-width="344">
             <v-form v-model="form" @submit.prevent="onSubmit">
@@ -29,6 +39,7 @@ export default {
         firstname: EnvironmentVariable.user.first_name,
         lastname: EnvironmentVariable.user.last_name,
         email: EnvironmentVariable.user.email,
+        balance: EnvironmentVariable.user.balance,
         form: false,
         loading: false,
     }),
