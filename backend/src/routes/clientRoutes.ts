@@ -5,12 +5,8 @@ import { Client } from '../entities/Client.entity';
 const router = express.Router();
 
 router.get('/api/client/get/all', async (req, res) => {    
-	const clients = await createQueryBuilder()
-                            .select()
-                            .from(Client, 'c')
-                            .getRawMany()
-                            
-	return res.json(clients);
+	const clients = await createQueryBuilder('client').getRawMany();
+	return res.json({clients : clients});
 });
 
 

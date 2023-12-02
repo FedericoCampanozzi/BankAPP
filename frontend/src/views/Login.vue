@@ -1,4 +1,5 @@
 <template>
+    <Navigator />
     <v-sheet class="pa-12" rounded>
         <v-card class="mx-auto px-6 py-8" max-width="344">
             <div v-if="userNotFound" class="error-title py-4">
@@ -39,6 +40,7 @@
 <script lang="ts">
 import { EnvironmentVariable } from '../../environment/environment.global';
 import axios from 'axios';
+import Navigator from './components/Navigator.vue';
 
 export default {
     data: () => ({
@@ -50,38 +52,36 @@ export default {
     }),
     methods: {
         onSubmit() {
-            if (!this.form) return;
-            this.loading = true;            
-            axios.post('login/post', { 
-                    Username: this.username,
-                    Password: this.password
-                }, EnvironmentVariable.host)
+            if (!this.form)
+                return;
+            this.loading = true;
+            axios.post('login/post', {
+                Username: this.username,
+                Password: this.password
+            }, EnvironmentVariable.host)
                 .then((response) => {
-                    this.loading = false;
-
-                    const role = response.data['role'];
-                    let user = undefined;
-                    this.userNotFound = role == "NotFound";
-
-                    if(role == "Client")        user = response.data['ifClient'];
-                    else if(role == "Banker")   user = response.data['ifBanker'];
-                    console.log("user = ", user);
-                    console.log("role = ", role);
-
-                    this.username = null;
-                    this.password = null;
-
-                    if(!this.userNotFound) {
-                        EnvironmentVariable.user = user
-                        EnvironmentVariable.isClient = role == "Client";
-                        this.loadTransactionsComponent();
-                    }
+                this.loading = false;
+                const role = response.data['role'];
+                let user = undefined;
+                this.userNotFound = role == "NotFound";
+                if (role == "Client")
+                    user = response.data['ifClient'];
+                else if (role == "Banker")
+                    user = response.data['ifBanker'];
+                console.log("user = ", user);
+                console.log("role = ", role);
+                this.username = null;
+                this.password = null;
+                if (!this.userNotFound) {
+                    EnvironmentVariable.user = user;
+                    EnvironmentVariable.isClient = role == "Client";
+                    this.loadTransactionsComponent();
                 }
-            );
+            });
         },
         required(v: any) {
             this.userNotFound = false;
-            return !!v || 'Field is required'
+            return !!v || 'Field is required';
         },
         loadTransactionsComponent() {
             import('@/views/Transactions.vue').then(module => {
@@ -91,5 +91,6 @@ export default {
             });
         }
     },
+    components: { Navigator }
 }
 </script>

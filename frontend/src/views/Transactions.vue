@@ -1,8 +1,6 @@
 <template>
-    <v-table
-    fixed-header
-    height="300px"
-  >
+  <Navigator />
+  <v-table fixed-header height="300px" style="padding: 20px;">
     <thead>
       <tr>
         <th class="text-left">
@@ -12,7 +10,7 @@
           Date
         </th>
         <th class="text-left">
-          
+
         </th>
         <th class="text-left">
           Sender
@@ -23,16 +21,16 @@
         <th class="text-left">
           Operator
         </th>
-        <th>
-          
+        <th class="text-left">
+          Amount
+        </th>
+        <th class="text-left">
+
         </th>
       </tr>
     </thead>
     <tbody>
-      <tr
-        v-for="item in transactions"
-        :key="item.id"
-      >
+      <tr v-for="item in transactions" :key="item.id">
         <td>{{ item.id }}</td>
         <td>{{ formatDate(item.created_at) }}</td>
         <td>
@@ -47,14 +45,10 @@
             {{ item.banker }} (ID:{{ item.banker_employee_number }})
           </div>
         </td>
-        <td>{{ item.amount }}</td>
+        <td>{{ item.amount }} &euro;</td>
         <td>
-          <v-btn
-          size="small" 
-          type="submit"
-          variant="elevated"
-          @click="deleteTransaction">
-            <font-awesome-icon :icon="'trash'" style="color: #e70303;" size="lg"/>
+          <v-btn size="small" type="submit" variant="elevated" @click="deleteTransaction(item.id)">
+            <font-awesome-icon :icon="'trash'" style="color: #e70303;" size="lg" />
           </v-btn>
         </td>
       </tr>
@@ -63,36 +57,43 @@
 </template>
 
 <script lang="ts">
+import Navigator from './components/Navigator.vue';
 import { Transaction } from '@/interfaces/transaction.entity';
 import { EnvironmentVariable } from '../../environment/environment.global'
+import axios from 'axios';
 
 export default {
-    name: 'Transactions',
-    data(): { transactions: Transaction[] } {
-      return {
-        transactions: [],
-      };
+  name: 'Transactions',
+  data(): { transactions: Transaction[] } {
+    return {
+      transactions: [],
+    };
+  },
+  created() {
+    this.getAllTransactions();
+  },
+  methods: {
+    getAllTransactions() {
+      const id = EnvironmentVariable.isClient ? EnvironmentVariable.user.id : -1;
+      this.axios.get(`transaction/get/${id}`, EnvironmentVariable.host).then((response) => {
+        console.log("transactions = ", response.data['transactions']);
+        this.transactions = response.data['transactions'];
+      });
     },
-    created() {
-      this.getAllTransactions();
+    deleteTransaction(id: number | undefined) {
+      if (id != undefined) {
+        axios.post(`transaction/delete`, { IdTransaction: id }, EnvironmentVariable.host)
+          .then((response) => {
+            console.log(`Removed transaction with id = ${id}`);
+            this.getAllTransactions();
+          });
+      }
     },
-    methods: {
-        getAllTransactions() {
-            const id = EnvironmentVariable.isClient ? EnvironmentVariable.user.id : -1;
-            this.axios.get(`transaction/get/${id}`, EnvironmentVariable.host ).then((response) => { 
-              console.log("transactions = ", response.data['transactions']);
-              this.transactions = response.data['transactions']; 
-            });
-        },
-        deleteTransaction() {
-          /* api delete here */
-          this.getAllTransactions();
-        },
-        formatDate(d?: Date){
-          if(d == undefined || d == null) return "No Data";
-          //return new Date(d).toLocaleDateString();
-          return d.toLocaleDateString();
-        }
+    formatDate(d?: Date) {
+      if (d == undefined || d == null) return "No Data";
+      return new Date(d).toLocaleDateString();
     }
+  },
+  components: { Navigator }
 }
 </script>

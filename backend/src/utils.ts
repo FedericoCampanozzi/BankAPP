@@ -29,4 +29,18 @@ export class UtilityFunctions {
     public static getFakeNumber(): number {
         return Math.floor(Math.random() * 100000);
     }
+
+    public static getFakeNumberBetween(min: number, max: number): number {
+        return  Math.random() * (max - min) + min;
+    }
+
+    public static getFakeDate(): Date {
+        const year = UtilityFunctions.getFakeNumberBetween(1900,2024);
+        const month = UtilityFunctions.getFakeNumberBetween(1,13);
+        const day = UtilityFunctions.getFakeNumberBetween(1,26);
+        const hour = UtilityFunctions.getFakeNumberBetween(1,25);
+        const minute = UtilityFunctions.getFakeNumberBetween(0,61);
+        const second = UtilityFunctions.getFakeNumberBetween(0,61);
+        return new Date(year, month, day, hour, minute, second);
+    }
 }

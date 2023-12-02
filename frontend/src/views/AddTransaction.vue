@@ -1,4 +1,5 @@
 <template>
+    <Navigator />
     <v-sheet class="pa-12" rounded>
         <v-card class="mx-auto px-6 py-8" max-width="344">
             <v-form v-model="form" @submit.prevent="onSubmit">
@@ -7,30 +8,36 @@
                 </p>
                 <hr>
                 <v-select
-                    clearable
                     label="Tipo Transazione"
-                    :items="getAllTransactionType()"
+                    :items="transactionTypes"
                     variant="outlined"
-                    item-title="name"
-                    :rules="[required_mm]" 
-                    v-on:change="setUpSelects"/>
+                    item-title="TransactionType_name"
+                    item-value="TransactionType_id"
+                    v-model="sel_tt_id"
+                    :rules="[required]" />
                 
                 <v-select
-                    clearable
                     label="Cliente"
-                    :items="getAllClients()"
-                    :rules="[required_mm]" 
+                    :items="clients"
+                    item-title="Client_username"
+                    item-value="Client_id"
+                    v-model="sel_sender_id"
+                    :rules="[required]" 
                     variant="outlined" />
                 
                 <v-select
                     clearable
                     label="Ricevente"
-                    :items="getAllClients()"
-                    :rules="[required_mm]" 
+                    :items="clients"
+                    item-title="Client_username"
+                    item-value="Client_id"
+                    v-if="show_receiver"
+                    v-model="sel_receiver_id"
+                    :rules="[required]" 
                     variant="outlined" />
                 
-                <v-text-field 
-                    v-model="password"
+                <v-text-field
+                    v-model="amount"
                     type="number"
                     step="0.1"
                     :readonly="loading" 
@@ -56,30 +63,62 @@
 import { TransactionType } from '@/interfaces/transactionType.entity';
 import { EnvironmentVariable } from '../../environment/environment.global';
 import { Client } from '@/interfaces/client.entity';
+import Navigator from './components/Navigator.vue';
+
 export default {
-    data: () => ({
-        username: null,
-        password: null,
-        form: false,
-        loading: false,
-        user: EnvironmentVariable.user
-    }),
+    data(): {
+        sel_tt_id: number,
+        sel_sender_id: number,
+        sel_receiver_id: number,
+        show_receiver: boolean,
+        amount: number,
+        loading: boolean,
+        form: boolean,
+        clients: Client[] ,
+        transactionTypes: TransactionType[] 
+    } {
+      return {
+            sel_tt_id: 1,
+            sel_sender_id: 1,
+            sel_receiver_id: 2,
+            show_receiver: false,
+            amount: 0,
+            loading: false,
+            form: false,
+            clients: [],
+            transactionTypes: []
+        };
+    },
+    created() {
+      this.getAllClients();
+      this.getAllTransactionType();
+    },
+    watch:{
+        sel_tt_id(newValue, oldValue){
+            this.show_receiver = this.sel_tt_id == 3;
+        },
+        sel_receiver_id(newValue, oldValue){
+            if(newValue == this.sel_sender_id){
+                this.sel_receiver_id = oldValue;
+            } 
+        }
+    },
     methods: {
         onSubmit() {
             if (!this.form) return;
             this.loading = true;
-            /*this.axios.post('login/post', { 
-                    username: this.username,
-                    password: this.password
-                }, EnvironmentVariable.host).then((response) => {
+            this.axios.put('transaction/put', {
+                TransactionType : this.sel_tt_id,
+                Sender : this.sel_sender_id,
+                Receiver : this.sel_receiver_id,
+                Banker : EnvironmentVariable.user.id,
+                Amount: this.amount,
+                IsClient : EnvironmentVariable.isClient
+            }, EnvironmentVariable.host)
+            .then((response) => {
                 this.loading = false;
-                console.log(response.data);
+                this.loadTransactionsComponent();
             });
-            */
-            setTimeout(() => {
-                this.loading = false;
-                this.$router.push({ path: '/transactions' });
-            }, 1000);
         },
         required(v: any) {
             return !!v || 'Field is required'
@@ -90,16 +129,27 @@ export default {
             return n > 0 || 'Insert positive number'
         },
         getAllTransactionType() : TransactionType[] {
-            this.axios.get('transaction-type/get/all', EnvironmentVariable.host ).then((response) => { return response.data; });
+            this.axios.get('transaction-type/get/all', EnvironmentVariable.host ).then((response) => { 
+                console.log("transactionTypes = ", response.data['transactionTypes']);
+                this.transactionTypes = response.data['transactionTypes'];
+            });
             return [];
         },
         getAllClients() : Client[] {
-            this.axios.get('client/get/all', EnvironmentVariable.host ).then((response) => { return response.data; });
+            this.axios.get('client/get/all', EnvironmentVariable.host ).then((response) => { 
+                console.log("clients = ", response.data['clients']);
+                this.clients = response.data['clients']; 
+            });
             return [];
         },
-        setUpSelects() {
-          
+        loadTransactionsComponent() {
+            import('@/views/Transactions.vue').then(module => {
+                this.$router.push({ path: '/transactions' });
+            }).catch(error => {
+                console.error('Failed to load TransactionsComponent:', error);
+            });
         }
     },
+    components: { Navigator }
 }
 </script>

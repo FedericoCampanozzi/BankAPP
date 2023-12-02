@@ -12,7 +12,9 @@ import { Banker } from './Banker.entity';
 @Entity('transaction')
 export class Transaction extends BaseTable {
 	@Column({
-		type: 'numeric',
+		type: 'decimal',
+		precision: 6,
+		scale: 2
 	})
 	amount: number;
 

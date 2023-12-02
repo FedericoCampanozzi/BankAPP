@@ -1,4 +1,5 @@
 <template>
+    <Navigator />
     <v-sheet class="pa-12" rounded>
         <v-card class="mx-auto px-6 py-8" max-width="344">
             <v-form v-model="form" @submit.prevent="onSubmit">
@@ -19,7 +20,10 @@
 </template>
 
 <script lang="ts">
+import axios from 'axios';
 import { EnvironmentVariable } from '../../environment/environment.global';
+import Navigator from './components/Navigator.vue';
+
 export default {
     data: () => ({
         firstname: EnvironmentVariable.user.first_name,
@@ -35,18 +39,26 @@ export default {
             EnvironmentVariable.user.first_name = this.firstname,
             EnvironmentVariable.user.last_name = this.lastname,
             EnvironmentVariable.user.email = this.email,
-            this.axios.put('user/update', { 
+            axios.put('user/update', { 
                 User: EnvironmentVariable.user, 
                 IsClient : EnvironmentVariable.isClient
             }, EnvironmentVariable.host)
             .then((response) => {
                 this.loading = false;
-                this.$router.push({ path: '/transactions' });
+                this.loadTransactionsComponent();
             });
         },
         required(v: any) {
             return !!v || 'Field is required'
         },
+        loadTransactionsComponent() {
+            import('@/views/Transactions.vue').then(module => {
+                this.$router.push({ path: '/transactions' });
+            }).catch(error => {
+                console.error('Failed to load TransactionsComponent:', error);
+            });
+        }
     },
+    components: { Navigator }
 }
 </script>
