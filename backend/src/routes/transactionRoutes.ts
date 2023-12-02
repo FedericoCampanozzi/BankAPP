@@ -69,24 +69,6 @@ router.post('/api/transaction/post', async (req, res) => {
     transaction.amount = Amount;
 
     await transaction.save();
-
-    if (TransactionTypeID == 0 && ids != -1 && idr == -1) {
-        // 0 = deposit => A client want to deposit some money in his current account
-        sender.balance = sender.balance + Amount;
-        await sender.reload();
-    } else if (TransactionTypeID === 1 && ids != -1 && idr == -1) {
-        // 1 = withdraw => A client want to take some money from his current account
-        sender.balance = sender.balance - Amount;
-        await sender.reload();
-    } else if (TransactionTypeID === 2 && ids != -1 && idr != -1){
-        // 2 = transfer => A client want to pay someone
-        sender.balance = sender.balance - Amount;
-        receiver.balance = receiver.balance + Amount;
-        await sender.reload();
-        await receiver.reload();
-    } else {
-        return res.json({ msg : "Wrong transaction type" });
-    }
     return res.json({ msg : "transaction insert successfully" });
 }
 );

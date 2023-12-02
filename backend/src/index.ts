@@ -1,7 +1,8 @@
 import express from 'express';
 import { Request } from "express";
 import { SERVER_PORT, connect } from './connect';
- 
+ import { fixUsersBalance } from './db/fixUserBalance';
+
 /* ROUTES */
 import { clientRoutes } from './routes/clientRoutes';
 import { transactionRoutes } from './routes/transactionRoutes';
@@ -33,6 +34,8 @@ const main = async () => {
 		app.use(clientRoutes);
 		app.use(transactionRoutes);
 		app.use(userRoutes);
+		
+		await fixUsersBalance();
 
 		app.listen(SERVER_PORT, () => {
 			console.log('Now server is running on port', SERVER_PORT);

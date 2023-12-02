@@ -19,52 +19,54 @@ const cli = {
   migrationsDir: path.join(__dirname, "migrations")
 }
 
+let drop = process.env.DB_DROP && process.env.DB_DROP == "true" ? true : false;
+
 if(envfile == "mysql") {
-    configuration = {
-      type: 'mysql',
-      port: process.env.DB_PORT ? Number(process.env.DB_PORT) : -1,
-      host: process.env.HOST ? String(process.env.HOST) : "",
-      database: process.env.DB_NAME ? String(process.env.DB_NAME) : "",
-      username: process.env.DB_USER ? String(process.env.DB_USER) : "",
-      password: process.env.DB_PASSWORD ? String(process.env.DB_PASSWORD) : "",
-      //dropSchema: true,
-      entities: entities,
-      synchronize: true,
-      //migrationsRun: true,
-      //migrations: migrations,
-      cli: cli
-    };
+  configuration = {
+    type: 'mysql',
+    port: process.env.DB_PORT ? Number(process.env.DB_PORT) : -1,
+    host: process.env.HOST ? String(process.env.HOST) : "",
+    database: process.env.DB_NAME ? String(process.env.DB_NAME) : "",
+    username: process.env.DB_USER ? String(process.env.DB_USER) : "",
+    password: process.env.DB_PASSWORD ? String(process.env.DB_PASSWORD) : "",
+    dropSchema: drop,
+    entities: entities,
+    synchronize: true,
+    migrationsRun: true,
+    migrations: migrations,
+    cli: cli
+  };
 } else if(envfile == "_sqlite"){
-    configuration = {
-      type: 'sqlite',
-      database: process.env.DB_PATH ? path.resolve(__dirname, String(process.env.DB_PATH)) : "",
-      dropSchema: true,
-      entities: entities,
-      synchronize: true,
-      //migrationsRun: true,
-      //migrations: migrations,
-      cli: cli
-    };
+  configuration = {
+    type: 'sqlite',
+    database: process.env.DB_PATH ? path.resolve(__dirname, String(process.env.DB_PATH)) : "",
+    dropSchema: drop,
+    entities: entities,
+    synchronize: true,
+    migrationsRun: true,
+    migrations: migrations,
+    cli: cli
+  };
 } else if(envfile == "postgres"){
-    configuration = {
-      type: 'postgres',
-      replication:{
-        master:{
-          port: process.env.DB_PORT ? Number(process.env.DB_PORT) : -1,
-          host: process.env.HOST ? String(process.env.HOST) : "",
-          database: process.env.DB_NAME ? String(process.env.DB_NAME) : "",
-          username: process.env.DB_USER ? String(process.env.DB_USER) : "",
-          password: process.env.DB_PASSWORD ? String(process.env.DB_PASSWORD) : ""          
-        },
-        slaves:[]
+  configuration = {
+    type: 'postgres',
+    replication:{
+      master:{
+        port: process.env.DB_PORT ? Number(process.env.DB_PORT) : -1,
+        host: process.env.HOST ? String(process.env.HOST) : "",
+        database: process.env.DB_NAME ? String(process.env.DB_NAME) : "",
+        username: process.env.DB_USER ? String(process.env.DB_USER) : "",
+        password: process.env.DB_PASSWORD ? String(process.env.DB_PASSWORD) : ""          
       },
-      //dropSchema: true,
-      entities: entities,
-      synchronize: true,
-      //migrationsRun: true,
-      //migrations: migrations,
-      cli: cli
-    }
+      slaves:[]
+    },
+    dropSchema: drop,
+    entities: entities,
+    synchronize: true,
+    migrationsRun: true,
+    migrations: migrations,
+    cli: cli
+  }
 }
 
 export { configuration as configuration};
