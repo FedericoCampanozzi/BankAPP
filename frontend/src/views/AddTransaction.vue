@@ -22,6 +22,7 @@
                     item-title="Client_username"
                     item-value="Client_id"
                     v-model="sel_sender_id"
+                    v-if="show_sender"
                     :rules="[required]" 
                     variant="outlined" />
                 
@@ -72,6 +73,7 @@ export default {
         sel_sender_id: number,
         sel_receiver_id: number,
         show_receiver: boolean,
+        show_sender: boolean,
         amount: number,
         loading: boolean,
         form: boolean,
@@ -80,9 +82,10 @@ export default {
     } {
       return {
             sel_tt_id: 1,
-            sel_sender_id: 1,
+            sel_sender_id: EnvironmentVariable.user.id,
             sel_receiver_id: 2,
             show_receiver: false,
+            show_sender: !EnvironmentVariable.isClient,
             amount: 0,
             loading: false,
             form: false,
@@ -112,7 +115,7 @@ export default {
                 TransactionTypeID : this.sel_tt_id,
                 Sender : this.sel_sender_id,
                 Receiver : this.sel_receiver_id,
-                Banker : EnvironmentVariable.user.id,
+                BankerID : EnvironmentVariable.user.id,
                 Amount: this.amount,
                 Role : EnvironmentVariable.role
             });

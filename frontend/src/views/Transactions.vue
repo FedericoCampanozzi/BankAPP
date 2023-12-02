@@ -93,7 +93,11 @@ export default {
     },
     formatDate(d?: Date) {
       if (d == undefined || d == null) return "No Data";
-      return new Date(d).toLocaleDateString();
+      return new Date(d).toLocaleDateString(undefined,{
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      });
     }
   },
   components: { Navigator }
