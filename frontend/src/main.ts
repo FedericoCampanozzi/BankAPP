@@ -15,6 +15,7 @@ import {
     faUpLong,
     faBuildingColumns
 } from '@fortawesome/free-solid-svg-icons'
+import { EnvironmentVariable } from "../environment/environment.global"
 
 library.add(
     faRightToBracket, 
@@ -26,7 +27,14 @@ library.add(
     faArrowsRotate,
     faDownLong,
     faUpLong,
-    faBuildingColumns)
+    faBuildingColumns);
+
+const user = localStorage.getItem('user');
+if(user != null) { 
+    EnvironmentVariable.user = JSON.parse(user.toString());
+    EnvironmentVariable.role = localStorage.getItem('role');
+    EnvironmentVariable.isClient = EnvironmentVariable.role == "Client";
+}
 
 const app = createApp(App).component('font-awesome-icon', FontAwesomeIcon);
 registerPlugins(app);

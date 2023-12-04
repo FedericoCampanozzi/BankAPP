@@ -70,6 +70,8 @@ export default {
       return this.$route.name != "Login" && this.$route.name != "Default" && this.$route.name != pageName;
     },
     logout() {
+      localStorage.removeItem('user');
+      localStorage.removeItem('role');
       EnvironmentVariable.isClient = undefined;
       EnvironmentVariable.user = undefined;
     },

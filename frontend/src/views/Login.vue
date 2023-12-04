@@ -73,6 +73,8 @@ export default {
             this.password = null;
 
             if (!this.userNotFound) {
+                localStorage.setItem('user', JSON.stringify(user));
+                localStorage.setItem('role', role);
                 EnvironmentVariable.user = user;
                 EnvironmentVariable.isClient = role == "Client";
                 EnvironmentVariable.role = role;
