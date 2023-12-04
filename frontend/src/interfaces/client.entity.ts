@@ -1,6 +1,6 @@
-import { BaseTable } from "./baseTable.etity";
+import { Person } from "./person.entity";
 
-export class Client extends BaseTable {
+export class Client extends Person {
     cardnumber?: string;
     balance?: number;
     is_active?: boolean;

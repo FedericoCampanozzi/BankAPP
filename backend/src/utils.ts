@@ -4,6 +4,7 @@ export class UtilityFunctions {
         const randomIndex = Math.floor(Math.random() * alphabet.length);
         return alphabet.charAt(randomIndex);
     }
+    
     public static getRandomChar(): string {
         const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
         const randomIndex = Math.floor(Math.random() * alphabet.length);
