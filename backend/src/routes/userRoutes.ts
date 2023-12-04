@@ -47,8 +47,6 @@ router.put("/api/user/update", async (req, res) => {
                         .getOne();
     }
 
-    //console.log("user_data = ", user_data, "user_db = ", user_db);
-
     if(user_db != undefined){
         user_db.first_name = user_data.first_name;
         user_db.last_name = user_data.last_name;

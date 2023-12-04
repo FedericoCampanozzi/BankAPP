@@ -37,7 +37,6 @@ export default class InitialDatabaseSeed implements Seeder {
         "email",
         "username",
         "password",
-        "balance",
         "card_number",
         "is_active",
       ])

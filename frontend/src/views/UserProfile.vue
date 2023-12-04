@@ -39,10 +39,13 @@ export default {
         firstname: EnvironmentVariable.user.first_name,
         lastname: EnvironmentVariable.user.last_name,
         email: EnvironmentVariable.user.email,
-        balance: EnvironmentVariable.user.balance,
+        balance: 0,
         form: false,
         loading: false,
     }),
+    created() {
+        this.getBalance();
+    },
     methods: {
         onSubmit() {
             if (!this.form) return;
@@ -68,6 +71,9 @@ export default {
             }).catch(error => {
                 console.error('Failed to load TransactionsComponent:', error);
             });
+        }
+        getBalance(){
+            
         }
     },
     components: { Navigator }

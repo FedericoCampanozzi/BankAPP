@@ -9,7 +9,6 @@ define(Client, () => {
   client.email = UtilityFunctions.getFakeName(10);
   client.username = UtilityFunctions.getFakeName(5);
   client.password = UtilityFunctions.getFakeName(5);
-  client.balance = 0;
   client.card_number = UtilityFunctions.getFakeCardNumber(5);
   client.is_active = true;
   return client;

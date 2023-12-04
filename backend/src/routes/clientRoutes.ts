@@ -9,5 +9,8 @@ router.get('/api/client/get/all', async (req, res) => {
 	return res.json({clients : clients});
 });
 
+router.post('/api/client/get-balance', async (req, res) => {
+	const ClientID = req.body.ClientID;
+});
 
 export { router as clientRoutes };
