@@ -71,9 +71,12 @@ export default {
             }).catch(error => {
                 console.error('Failed to load TransactionsComponent:', error);
             });
-        }
-        getBalance(){
-            
+        },
+        async getBalance(){
+            const response = await axios.post('client/get-balance', {
+                ClientID: EnvironmentVariable.user.id
+            }, EnvironmentVariable.host);
+            this.balance = parseFloat(response.data["balance"]);
         }
     },
     components: { Navigator }

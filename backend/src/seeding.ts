@@ -8,6 +8,7 @@ import { UtilityFunctions } from "./utils";
 
 export default class InitialDatabaseSeed implements Seeder {
   public async run(factory: Factory, connection: Connection): Promise<void> {
+    
     await factory(Client)().createMany(15);
     await factory(Banker)().createMany(15);
 

@@ -1,6 +1,6 @@
 <template>
   <Navigator />
-  <v-table fixed-header height="800px" style="padding: 20px;" aria-sort="ascending">
+  <v-table fixed-header height="450px" style="padding: 20px;" aria-sort="ascending">
     <thead>
       <tr>
         <th class="text-left">
